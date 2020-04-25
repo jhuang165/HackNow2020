@@ -20,7 +20,7 @@ const Register: React.FC = () => {
 
 		});
     if (!error) {
-      window.history.pushState(null, "Main", "/tab1");
+      window.history.pushState(null, "Main", "/tab2");
     }
 	}
   /*

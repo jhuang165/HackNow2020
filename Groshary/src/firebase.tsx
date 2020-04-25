@@ -18,3 +18,4 @@ db.ref('users/blahblah/Breakfast List!').set({
 	beef: 1
 });
 export const auth = firebase.auth()
+export const provider = new firebase.auth.GoogleAuthProvider();
