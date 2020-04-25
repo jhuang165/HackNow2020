@@ -1,11 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Login.css'
-import { IonText } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
 
 const Login: React.FC = () => {
+	const [text, setText] = useState<string>();
+  	const [number, setNumber] = useState<number>();
     return (
         // put stuff here
-        <IonText>Hello</IonText>
+        <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonTitle>Login</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>
+        <IonList>
+        	
+          	<IonItem>
+            	<IonLabel position="floating">Email</IonLabel>
+            	<IonInput value={text}></IonInput>
+         	</IonItem>
+         	<IonItem>
+            	<IonLabel position="floating">Password</IonLabel>
+            	<IonInput value={text}></IonInput>
+         	</IonItem>
+        </IonList>
+      </IonContent>
+    </IonPage>
     );
 };
 
