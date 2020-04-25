@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import './Login.css'
+import './Register.css'
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider, IonButton, IonIcon } from '@ionic/react';
 import {auth} from '../firebase';
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
 	var email = "";
 	var password = "";
-	function login() {
-		auth.signInWithEmailAndPassword(email, password).catch(function(error) {
+	function register() {
+		auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
+  			// Handle Errors here.
   			var errorCode = error.code;
   			var errorMessage = error.message;
   			alert(errorMessage);
@@ -31,7 +32,9 @@ const Login: React.FC = () => {
             	<IonLabel position="floating">Password</IonLabel>
             	<IonInput value={password}></IonInput>
          	</IonItem>
-         	<IonButton expand="block" onClick={ () => login() }>Login</IonButton>
+         	<IonButton expand="block" onClick={ () => register() }>
+           Register
+           </IonButton>
         </IonList>
       </IonContent>
     </IonPage>
