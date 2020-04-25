@@ -20,9 +20,11 @@ class GroceryLists extends React.Component<Props, State> {
     }
     componentDidMount() {
         let listNames: Array<String> = [];
-        var ref = db.ref('/users/blablah/');
-        ref.on('value', function(snapshot) {
-            // do something with snapshot.val()
+        var ref = db.ref('/users/blahblah/');
+        ref.on('value', snapshot => {
+            let keys = Object.keys(snapshot.val());
+            listNames = keys;
+            this.setState({ listNames, loading: false });
         });
     }
     render() {
