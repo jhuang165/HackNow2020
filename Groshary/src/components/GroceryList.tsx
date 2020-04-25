@@ -35,7 +35,9 @@ class GroceryList extends React.Component<GroceryProps, State> {
                         <IonItem>
                             {!this.props.editable && <IonLabel>{item}</IonLabel>}
                             {this.props.checkable && <IonCheckbox slot="start" />}    
-                            {this.props.editable && <IonInput value={item.toString()}></IonInput>}
+                            {this.props.editable && <IonInput value={item.toString()} onIonChange={(e) => {
+                                this.state.list[count] = (e.detail.value ?? '').toString();
+                            }}/>}
                         </IonItem>
                     );
                 })}
