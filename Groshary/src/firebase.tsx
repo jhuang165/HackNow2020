@@ -11,5 +11,16 @@ const config = {
     measurementId: "G-TJ6WB8T75F"
 };
 firebase.initializeApp(config);
-const databaseRef = firebase.database().ref();
-export const todosRef = databaseRef.child("todos");
+const db = firebase.database().ref();
+db.collection("groceryList").doc("LA").set({
+    name: "Los Angeles",
+    state: "CA",
+    country: "USA"
+})
+.then(function() {
+    console.log("Document successfully written!");
+})
+.catch(function(error) {
+    console.error("Error writing document: ", error);
+});
+export const todosRef = db.child("todos");
