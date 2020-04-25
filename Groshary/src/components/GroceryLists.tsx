@@ -20,12 +20,9 @@ class GroceryLists extends React.Component<Props, State> {
     }
     componentDidMount() {
         let listNames: Array<String> = [];
-        db.collection("groceryLists").get().then(docs => {
-            // docs: QuerySnapshot<DocumentData>
-            docs.docs.forEach(doc => {
-                listNames.push(doc.get("name"));
-            });
-            this.setState({ listNames, loading: false });
+        var ref = db.ref('/users/blablah/');
+        ref.on('value', function(snapshot) {
+            // do something with snapshot.val()
         });
     }
     render() {

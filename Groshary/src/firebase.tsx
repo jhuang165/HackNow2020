@@ -11,15 +11,9 @@ const config = {
     measurementId: "G-TJ6WB8T75F"
 };
 firebase.initializeApp(config);
-export const db = firebase.firestore();
-db.collection("groceryList").doc("01KoWPsmDHJkQV9TZYPu").collection("Breakfast").doc("hi").set({
-    bread: 73,
-    eggs: 2,
-    BEEF: 1000
-})
-.then(function() {
-    console.log("Document successfully written!");
-})
-.catch(function(error) {
-    console.error("Error writing document: ", error);
+export const db = firebase.database();
+db.ref('users/blahblah/blist').set({
+	bread: 1,
+	eggs: 1,
+	beef: 1
 });
