@@ -93,16 +93,26 @@ class GroceryList extends React.Component<GroceryProps, State> {
             {this.props.editable &&
                 <IonItem>
                     <IonInput type="number" value={this.state.newValue.toString()} ref={this.newEntryNum} placeholder="How many items" color='#ffffff' onKeyPress={(e) => {
-                        if (e.key.toLowerCase() == 'enter' || e.key.toLowerCase() == 'return') {
-                            this.state.listRef.push({
-                                "items": (this.newEntryNum.current?.value ?? '').toString()
-                            })
-                        }
+                            if (this.newEntryNum.current?.value?.toString() == null || this.newEntryNum.current?.value?.toString() == '') {
+                                var count = 1
+                            } else {
+                                count = parseInt(this.newEntryNum.current?.value?.toString() ?? "1")
+                            }
+                            if (e.key.toLowerCase() == 'enter' || e.key.toLowerCase() == 'return') {
+                                this.state.listRef.child('items').push(
+                                    { "count": count, "name": (this.newEntryStr.current?.value ?? '').toString() }
+                                );
+                            }
                     }} />
                     <IonInput value={this.state.newValue.toString()} ref={this.newEntryStr} placeholder="Add Grocery Item" color='#ffffff' onKeyPress={(e) => {
+                        if (this.newEntryNum.current?.value?.toString() == null || this.newEntryNum.current?.value?.toString() == ''){
+                            var count = 1
+                        } else {
+                            count = parseInt(this.newEntryNum.current?.value?.toString() ?? "1")
+                        }
                         if(e.key.toLowerCase() == 'enter' || e.key.toLowerCase() == 'return'){
                             this.state.listRef.child('items').push(
-                                {"name": (this.newEntry.current?.value ?? '').toString(), "count": 1}
+                                { "count": count, "name": (this.newEntryStr.current?.value ?? '').toString() }
                             );
                         }
                     }} />
