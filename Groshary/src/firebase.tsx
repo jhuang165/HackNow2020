@@ -11,11 +11,11 @@ const config = {
     measurementId: "G-TJ6WB8T75F"
 };
 firebase.initializeApp(config);
-const db = firebase.database().ref();
-db.collection("groceryList").doc("LA").set({
-    name: "Los Angeles",
-    state: "CA",
-    country: "USA"
+export const db = firebase.firestore();
+db.collection("groceryList").doc("01KoWPsmDHJkQV9TZYPu").collection("Breakfast").set({
+    bread: 73,
+    eggs: 2,
+    BEEF: 1000
 })
 .then(function() {
     console.log("Document successfully written!");
@@ -24,4 +24,3 @@ db.collection("groceryList").doc("LA").set({
     console.error("Error writing document: ", error);
 });
 export const todosRef = db.child("todos");
-export const db = firebase.firestore();
