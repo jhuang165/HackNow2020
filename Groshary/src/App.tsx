@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import RcIf, {RcElse} from 'rc-if';
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
@@ -17,6 +18,7 @@ import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 import {getPlatforms} from '@ionic/react';
+import { auth } from './firebase';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -38,17 +40,36 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 
 const App: React.FC = () => {
+
+
   const [loggedIn, setLoggedIn] = useState(
     true
   )
 
-  if(loggedIn){
+  auth.onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    var displayName = user.displayName;
+    var email = user.email;
+    var emailVerified = user.emailVerified;
+    var photoURL = user.photoURL;
+    var isAnonymous = user.isAnonymous;
+    var uid = user.uid;
+    var providerData = user.providerData;
+    // ...
+    setLoggedIn(true);
+  } else {
+    // User is signed out.
+    // ...
+    setLoggedIn(false);
+  }
+});
+
     return (
       <IonApp>
         <IonReactRouter>
-          <IonTabs>
-            <IonRouterOutlet>
-              <Route path="/" render={() => <Redirect to="/login" />} exact={true} />
+        <IonRouterOutlet>
+              <Route path="/" render={() => <Redirect to="/tab1" />} exact={true} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
               {/* Change this to only redirect to login if not authenticated */}
@@ -56,7 +77,19 @@ const App: React.FC = () => {
               <Route path="/tab2" component={Tab2} exact={true} />
               <Route path="/tab3" component={Tab3} />
             </IonRouterOutlet>
-            <IonTabBar slot={(getPlatforms().includes('desktop') || getPlatforms().includes('pwa')) ? 'top' : 'bottom'}>
+            <RcIf if={loggedIn}>
+          <IonTabs>
+            <IonRouterOutlet>
+              <Route path="/" render={() => <Redirect to="/tab1" />} exact={true} />
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
+              {/* Change this to only redirect to login if not authenticated */}
+              <Route path="/tab1" component={Tab1} exact={true} />
+              <Route path="/tab2" component={Tab2} exact={true} />
+              <Route path="/tab3" component={Tab3} />
+            </IonRouterOutlet>
+            
+            <IonTabBar slot={(getPlatforms().includes('desktop') || getPlatforms().includes('pwa')) ? 'top' : 'bottom'} >
               <IonTabButton tab="tab1" href="/tab1">
                 <IonIcon icon={triangle} />
                 <IonLabel>Tab 1</IonLabel>
@@ -70,24 +103,20 @@ const App: React.FC = () => {
                 <IonLabel>Tab 3</IonLabel>
               </IonTabButton>
             </IonTabBar>
+            
           </IonTabs>
-        </IonReactRouter>
-      </IonApp>
-    );
-  } else {
-    return(
-      <IonApp>
-        <IonReactRouter>
+          <RcElse>
             <IonRouterOutlet>
               <Route path="/" render={() => <Redirect to="/login" />} exact={true} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
-              {/* Change this to only redirect to login if not authenticated */}            
+              {/* Change this to only redirect to login if not authenticated */}
             </IonRouterOutlet>
+          </RcElse>
+          </RcIf>
         </IonReactRouter>
       </IonApp>
     );
-  }
 };
 
 export default App;

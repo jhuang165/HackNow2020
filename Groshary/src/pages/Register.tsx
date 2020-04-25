@@ -2,19 +2,26 @@ import React, { useState } from 'react';
 import './Register.css'
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider, IonButton, IonIcon } from '@ionic/react';
 import {auth} from '../firebase';
+import { History, LocationState } from "history";
+import { withRouter } from "react-router";
 
 const Register: React.FC = () => {
 	const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   
 	function register() {
+    var error = false;
 		auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
   			// Handle Errors here.
+        error = true;
   			var errorCode = error.code;
   			var errorMessage = error.message;
   			alert(errorMessage + " " + email);
 
 		});
+    if (!error) {
+      window.history.pushState(null, "Main", "/tab1");
+    }
 	}
   /*
   const handleChange = (e: Event) => {
@@ -59,7 +66,7 @@ const Register: React.FC = () => {
          	<IonButton expand="block" onClick={ () => register() }>
            Register
            </IonButton>
-           <IonButton id="change_screen_button" color="warning" fill="outline" href="/login">Already have an account? Login here</IonButton>
+           <IonButton id="change_screen_button" color="warning" fill="outline" href="/login">Login</IonButton>
         </IonList>
       </IonContent>
     </IonPage>
