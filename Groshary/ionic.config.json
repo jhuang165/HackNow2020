@@ -1,0 +1,7 @@
+{
+  "name": "Groshary",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
