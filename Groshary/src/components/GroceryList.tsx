@@ -12,9 +12,9 @@ interface GroceryProps {
 }
 
 interface State {
-    list: Map<String, Object>,
+    items: Map<String, Object>,
     newValue: String,
-    listName: String
+    name: String
 }
 
 class GroceryList extends React.Component<GroceryProps, State> {  
@@ -32,34 +32,31 @@ class GroceryList extends React.Component<GroceryProps, State> {
                 items: itemsList
             });
         });
-
-        this.newEntry = React.createRef()
+        this.newEntry = React.createRef() 
         this.state = {
-            list: this.props.items,
             newValue: '',
-            listName: 'New Grocery List'
-        }
-        console.log(this.props.items);
-        
+            items: new Map<String, Object>(),
+            name: 'Loading'
+        }          
     }
+
+    
 
     render() {
             return (
         <IonContent>
             <IonList>
                 <IonItem>
-                    <IonInput color="primary" value={this.state.listName.toString()} onIonChange={(e) => {this.setState({listName: (e.detail.value ?? '').toString()})}}></IonInput>
+                    <IonInput color="primary" value={this.state.name.toString()} onIonChange={(e) => {this.setState({name: (e.detail.value ?? '').toString()})}}></IonInput>
                 </IonItem>
                 
-
-                {this.state.list.forEach((da, ha) => {
-                    console.log("DAHA");
-                    console.log(da);
-                    console.log(ha);
+                {Object.entries(this.state.items).map(([key, value]) => {
+                    console.log(key);
+                    console.log(value)
                     return (
                         <IonItem>
-                            {/* {!this.props.editable && <IonLabel>{da.name}</IonLabel>}
-                            {this.props.checkable && <IonCheckbox slot="start" />}    
+                            {/* {!this.props.editable && <IonLabel>{val}</IonLabel>} */}
+                            {/*{this.props.checkable && <IonCheckbox slot="start" />}    
                             {this.props.editable && <IonInput value={da.count.toString()} onIonChange={(e) => {
                                 this.state.list.set('hash', {count: da.count, name: (e.detail.value ?? '').toString()})
                             }}/>}
@@ -73,7 +70,7 @@ class GroceryList extends React.Component<GroceryProps, State> {
                 })}
             </IonList>
 
-            {this.props.editable &&
+            {/* {this.props.editable &&
                 <IonItem>
                     <IonInput value={this.state.newValue.toString()} ref={this.newEntry} placeholder="Add Grocery Item" color='#ffffff' onKeyPress={(e) => {
                         if(e.key.toLowerCase() == 'enter' || e.key.toLowerCase() == 'return'){
@@ -85,7 +82,7 @@ class GroceryList extends React.Component<GroceryProps, State> {
                     }} />
                 </IonItem>
                 
-            }
+            } */}
         </IonContent>
     );
     }
