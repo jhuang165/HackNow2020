@@ -39,7 +39,7 @@ import './theme/variables.css';
 
 const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState(
-    false
+    true
   )
 
   if(loggedIn){
