@@ -82,15 +82,15 @@ const App: React.FC = () => {
             <IonTabBar slot={(getPlatforms().includes('desktop') || getPlatforms().includes('pwa')) ? 'top' : 'bottom'}>
               <IonTabButton tab="tab1" href="/tab1">
                 <IonIcon icon={triangle} />
-                <IonLabel>Tab 1</IonLabel>
+                <IonLabel>Make a List</IonLabel>
               </IonTabButton>}
             <IonTabButton tab="tab2" href="/tab2">
                 <IonIcon icon={ellipse} />
-                <IonLabel>Tab 2</IonLabel>
+                <IonLabel>View Lists</IonLabel>
               </IonTabButton>}
             <IonTabButton tab="tab3" href="/tab3">
                 <IonIcon icon={square} />
-                <IonLabel>Tab 3</IonLabel>
+                <IonLabel>A List</IonLabel>
               </IonTabButton>
             </IonTabBar>
           </IonTabs>
