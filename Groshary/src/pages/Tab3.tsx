@@ -17,7 +17,7 @@ const Tab3: React.FC = () => {
             <IonTitle size="large">Tab 3</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <GroceryList items={['a', 'b', 'c']} checkable={true}/>
+        <GroceryList items={['a', 'b', 'c']} checkable={true} editable={true}/>
       </IonContent>
     </IonPage>
   );

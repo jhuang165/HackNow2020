@@ -1,5 +1,6 @@
-import React from 'react';
-import { IonList, IonItem, IonInput, IonContent, IonLabel, IonCheckbox} from '@ionic/react';
+import React, {useState} from 'react';
+import { IonList, IonItem, IonInput, IonContent, IonLabel, IonCheckbox, IonIcon} from '@ionic/react';
+import {pencilOutline} from 'ionicons/icons'
 
 interface GroceryProps {
     items: Array<String>;
@@ -15,7 +16,8 @@ const GroceryList: React.FC<GroceryProps> = ({items, editable = false, checkable
                 return (
                     <IonItem>
                         {checkable && <IonCheckbox slot="start" />}
-                        <IonLabel>{item}</IonLabel>
+                        {!editable && <IonLabel>{item}</IonLabel>}
+                        {editable && <IonInput value={item.toString()}></IonInput>}
                     </IonItem>
                 );
             })}
@@ -23,7 +25,7 @@ const GroceryList: React.FC<GroceryProps> = ({items, editable = false, checkable
 
         {editable &&
             <IonItem>
-                <IonInput defaultValue="Add Grocery Item"/>
+                <IonInput placeholder="Add Grocery Item" color='#ffffff'/>
             </IonItem>
             
         }
