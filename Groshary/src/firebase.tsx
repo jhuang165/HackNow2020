@@ -12,7 +12,7 @@ const config = {
 };
 firebase.initializeApp(config);
 export const db = firebase.firestore();
-db.collection("groceryList").doc("01KoWPsmDHJkQV9TZYPu").collection("Breakfast").set({
+db.collection("groceryList").doc("01KoWPsmDHJkQV9TZYPu").collection("Breakfast").doc("hi").set({
     bread: 73,
     eggs: 2,
     BEEF: 1000
@@ -23,4 +23,3 @@ db.collection("groceryList").doc("01KoWPsmDHJkQV9TZYPu").collection("Breakfast")
 .catch(function(error) {
     console.error("Error writing document: ", error);
 });
-export const todosRef = db.child("todos");
