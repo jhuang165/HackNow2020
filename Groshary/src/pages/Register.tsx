@@ -59,7 +59,7 @@ const Register: React.FC = () => {
          	<IonButton expand="block" onClick={ () => register() }>
            Register
            </IonButton>
-           <IonButton color="warning" fill="outline" href="/login">Already have an account? Login here</IonButton>
+           <IonButton id="change_screen_button" color="warning" fill="outline" href="/login">Already have an account? Login here</IonButton>
         </IonList>
       </IonContent>
     </IonPage>

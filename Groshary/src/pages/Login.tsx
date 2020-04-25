@@ -46,7 +46,7 @@ const Login: React.FC = () => {
             	<IonInput value={password} onInput={(e) => handlePassChange(e as React.ChangeEvent<HTMLIonInputElement>)} />
          	</IonItem>
          	<IonButton expand="block" onClick={ () => login() }>Login</IonButton>
-         	<IonButton color="warning" fill="outline" href="/register">Don't have an account? Register here</IonButton>
+         	<IonButton id="change_screen_button" color="warning" fill="outline" href="/register">Don't have an account? Register here</IonButton>
         </IonList>
       </IonContent>
     </IonPage>
