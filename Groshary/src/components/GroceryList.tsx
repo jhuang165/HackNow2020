@@ -50,21 +50,26 @@ class GroceryList extends React.Component<GroceryProps, State> {
                     <IonInput color="primary" value={this.state.name.toString()} onIonChange={(e) => {this.setState({name: (e.detail.value ?? '').toString()})}}></IonInput>
                 </IonItem>
                 
-                {Object.entries(this.state.items).map(([key, value]) => {
-                    console.log(key);
-                    console.log(value)
+                {Object.entries(this.state.items).map(([key, value], count) => {
+                    var hash = Object.keys(this.state.items)[count]
                     return (
                         <IonItem>
-                            {/* {!this.props.editable && <IonLabel>{val}</IonLabel>} */}
-                            {/*{this.props.checkable && <IonCheckbox slot="start" />}    
-                            {this.props.editable && <IonInput value={da.count.toString()} onIonChange={(e) => {
-                                this.state.list.set('hash', {count: da.count, name: (e.detail.value ?? '').toString()})
+                            {!this.props.editable && <IonLabel>{value.name}</IonLabel>}
+                            {this.props.checkable && <IonCheckbox slot="start" />}
+                            {this.props.editable && <IonInput value={value.name} onIonChange={(e) => {
+                                let newItems = JSON.parse(JSON.stringify(this.state.items))
+                                newItems[hash].name = (e.detail.value ?? '').toString()
+                                this.setState({
+                                    items: newItems
+                                })                  
                             }}/>}
                             {this.props.editable && <IonIcon icon={closeOutline} onClick={e => {
+                                let newItems = JSON.parse(JSON.stringify(this.state.items))
+                                delete newItems[hash]
                                 this.setState({
-                                    list: this.state.list.delete(ha)
+                                    items: newItems
                                 })
-                            }}/>} */}
+                            }}/>}
                         </IonItem>
                     );
                 })}
