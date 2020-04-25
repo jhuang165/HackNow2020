@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { IonList, IonItem, IonInput, IonContent, IonLabel, IonCheckbox, IonIcon} from '@ionic/react';
-import {pencilOutline} from 'ionicons/icons'
+import {pencilOutline, construct, timeSharp} from 'ionicons/icons'
+import { render } from '@testing-library/react';
 
 interface GroceryProps {
     items: Array<String>;
@@ -8,28 +9,55 @@ interface GroceryProps {
     checkable?: boolean;
 }
 
+interface State {
+    list: Array<String>,
+    newValue: String
+}
 
-const GroceryList: React.FC<GroceryProps> = ({items, editable = false, checkable = false}) => (
-    <IonContent>
-        <IonList>
-            {items.map(item => {
-                return (
-                    <IonItem>
-                        {checkable && <IonCheckbox slot="start" />}
-                        {!editable && <IonLabel>{item}</IonLabel>}
-                        {editable && <IonInput value={item.toString()}></IonInput>}
-                    </IonItem>
-                );
-            })}
-        </IonList>
-
-        {editable &&
-            <IonItem>
-                <IonInput placeholder="Add Grocery Item" color='#ffffff'/>
-            </IonItem>
-            
+class GroceryList extends React.Component<GroceryProps, State> {  
+    private newEntry: React.RefObject<HTMLIonInputElement>;
+    
+    constructor(props: GroceryProps) {
+        super(props)
+        this.newEntry = React.createRef()
+        this.state = {
+            list: this.props.items,
+            newValue: ''
         }
-    </IonContent>
-);
+    }
+
+    render() {
+            return (
+        <IonContent>
+            <IonList>
+                {this.state.list.map((item, count) => {
+                    return (
+                        <IonItem>
+                            {!this.props.editable && <IonLabel>{item}</IonLabel>}
+                            {this.props.checkable && <IonCheckbox slot="start" />}    
+                            {this.props.editable && <IonInput value={item.toString()}></IonInput>}
+                        </IonItem>
+                    );
+                })}
+            </IonList>
+
+            {this.props.editable &&
+                <IonItem>
+                    <IonInput value={this.state.newValue.toString()} ref={this.newEntry} placeholder="Add Grocery Item" color='#ffffff' onKeyPress={(e) => {
+                        if(e.key.toLowerCase() == 'enter' || e.key.toLowerCase() == 'return'){
+                            this.setState({
+                                list: this.state.list.concat([(this.newEntry.current?.value ?? '').toString()])
+                            })
+                            //this.newEntry.current?.value = ''
+                        }
+                    }} />
+                </IonItem>
+                
+            }
+        </IonContent>
+    );
+    }
+    
+    };
 
 export default GroceryList;
