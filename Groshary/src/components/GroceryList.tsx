@@ -63,26 +63,17 @@ class GroceryList extends React.Component<GroceryProps, State> {
                             {!this.props.editable && <IonLabel>{value.count}</IonLabel>}
                             {!this.props.editable && <IonLabel>{value.name}</IonLabel>}
                             {this.props.editable && <IonInput type="number" value={value.count} onIonChange={(e) => {
-                                let newItems = JSON.parse(JSON.stringify(this.state.items))
-                                newItems[hash].count = (e.detail.value ?? '')
-                                this.setState({
-                                    items: newItems
-                                })
+                                // change count
+                                this.state.listRef.child('items').child(hash).update({ "count": (e.detail.value ?? '') }); 
                             }} />}                  
                             {this.props.editable && <IonInput value={value.name} onIonChange={(e) => {
-                                let newItems = JSON.parse(JSON.stringify(this.state.items))
-                                newItems[hash].name = (e.detail.value ?? '').toString()
-                                this.setState({
-                                    items: newItems
-                                })                  
+                                // change name
+                                this.state.listRef.child('items').child(hash).update({ "name": (e.detail.value ?? '').toString() }); 
                             }}/>}
                             
                             {this.props.editable && <IonIcon icon={closeOutline} onClick={e => {
-                                let newItems = JSON.parse(JSON.stringify(this.state.items))
-                                delete newItems[hash]
-                                this.setState({
-                                    items: newItems
-                                })
+                                // delete item
+                                this.state.listRef.child('items').child(hash).remove();
                             }}/>}
                             
                         </IonItem>
