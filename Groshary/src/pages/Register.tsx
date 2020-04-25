@@ -4,14 +4,14 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem
 import {auth} from '../firebase';
 
 const Register: React.FC = () => {
-	var email = "";
-	var password = "";
+	var email = "", password = "";
 	function register() {
 		auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
   			// Handle Errors here.
   			var errorCode = error.code;
   			var errorMessage = error.message;
-  			alert(errorMessage);
+  			alert(errorMessage + " " + email);
+
 		});
 	}
     return (
@@ -42,4 +42,4 @@ const Register: React.FC = () => {
 
 };
 
-export default Login;
+export default Register;

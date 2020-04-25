@@ -12,6 +12,7 @@ import {
 import { IonReactRouter } from '@ionic/react-router';
 import { ellipse, square, triangle } from 'ionicons/icons';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -43,6 +44,7 @@ const App: React.FC = () => (
         <IonRouterOutlet>
           <Route path="/" render={() => <Redirect to="/login" /> } exact={true} />
           <Route path="/login" component={Login} />
+          <Route path="/register" component={Register} />
           {/* Change this to only redirect to login if not authenticated */}
           <Route path="/tab1" component={Tab1} exact={true} />
           <Route path="/tab2" component={Tab2} exact={true} />
