@@ -4,8 +4,8 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem
 import {auth} from '../firebase';
 
 const Login: React.FC = () => {
-	const [ email, setEmail ] = useState('email');
-  	const [ password, setPassword ] = useState('password');
+	const [ email, setEmail ] = useState('');
+  	const [ password, setPassword ] = useState('');
 	function login() {
 		auth.signInWithEmailAndPassword(email, password).catch(function(error) {
   			var errorCode = error.code;
