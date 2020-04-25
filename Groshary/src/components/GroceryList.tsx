@@ -1,17 +1,18 @@
 import React from 'react';
-import { IonList, IonItem, IonInput, IonContent, IonLabel, IonCheckbox, IonIcon} from '@ionic/react';
-import {pencilOutline, construct, timeSharp} from 'ionicons/icons'
+import { IonList, IonItem, IonInput, IonContent, IonLabel, IonCheckbox, IonIcon, IonRippleEffect} from '@ionic/react';
+import {closeOutline, timeSharp} from 'ionicons/icons'
 import { render } from '@testing-library/react';
 
 interface GroceryProps {
-    items: Array<String>;
+    items: Map<String, Object>;
     editable?: boolean;
     checkable?: boolean;
 }
 
 interface State {
-    list: Array<String>,
-    newValue: String
+    list: Map<String, Object>,
+    newValue: String,
+    listName: String
 }
 
 class GroceryList extends React.Component<GroceryProps, State> {  
@@ -22,7 +23,8 @@ class GroceryList extends React.Component<GroceryProps, State> {
         this.newEntry = React.createRef()
         this.state = {
             list: this.props.items,
-            newValue: ''
+            newValue: '',
+            listName: 'New Grocery List'
         }
     }
 
@@ -30,13 +32,23 @@ class GroceryList extends React.Component<GroceryProps, State> {
             return (
         <IonContent>
             <IonList>
-                {this.state.list.map((item, count) => {
+                <IonItem>
+                    <IonInput color="primary" value={this.state.listName.toString()} onIonChange={(e) => {this.setState({listName: (e.detail.value ?? '').toString()})}}></IonInput>
+                </IonItem>
+                
+
+                {this.state.list.forEach((da, ha) => {
                     return (
                         <IonItem>
-                            {!this.props.editable && <IonLabel>{item}</IonLabel>}
+                            {!this.props.editable && <IonLabel>{da.name}</IonLabel>}
                             {this.props.checkable && <IonCheckbox slot="start" />}    
-                            {this.props.editable && <IonInput value={item.toString()} onIonChange={(e) => {
-                                this.state.list[count] = (e.detail.value ?? '').toString();
+                            {this.props.editable && <IonInput value={da.count.toString()} onIonChange={(e) => {
+                                this.state.list.set('hash', {count: da.count, name: (e.detail.value ?? '').toString()})
+                            }}/>}
+                            {this.props.editable && <IonIcon icon={closeOutline} onClick={e => {
+                                this.setState({
+                                    list: this.state.list.delete(ha)
+                                })
                             }}/>}
                         </IonItem>
                     );
