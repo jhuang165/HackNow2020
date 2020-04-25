@@ -4,8 +4,8 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem
 import {auth} from '../firebase';
 
 const Login: React.FC = () => {
-	var email = "";
-	var password = "";
+	const [ email, setEmail ] = useState('email');
+  	const [ password, setPassword ] = useState('password');
 	function login() {
 		auth.signInWithEmailAndPassword(email, password).catch(function(error) {
   			var errorCode = error.code;
@@ -13,6 +13,20 @@ const Login: React.FC = () => {
   			alert(errorMessage);
 		});
 	}
+	const handlePassChange = (e: React.ChangeEvent<HTMLIonInputElement>) => {
+    const txt = e.currentTarget.value;
+    if (txt != undefined) {
+      let txt2 = txt as string;
+      setPassword(txt2)
+    }
+  }
+  const handleEmailChange = (e: React.ChangeEvent<HTMLIonInputElement>) => {
+    const txt = e.currentTarget.value;
+    if (txt != undefined) {
+      let txt2 = txt as string;
+      setEmail(txt2)
+    }
+  }
     return (
         <IonPage>
       <IonHeader>
@@ -25,11 +39,11 @@ const Login: React.FC = () => {
         	
           	<IonItem>
             	<IonLabel position="floating">Email</IonLabel>
-            	<IonInput value={email}></IonInput>
-         	</IonItem>
+            	<IonInput value={email} onInput={(e) => handleEmailChange(e as React.ChangeEvent<HTMLIonInputElement>)} />         	
+            </IonItem>
          	<IonItem>
             	<IonLabel position="floating">Password</IonLabel>
-            	<IonInput value={password}></IonInput>
+            	<IonInput value={password} onInput={(e) => handlePassChange(e as React.ChangeEvent<HTMLIonInputElement>)} />
          	</IonItem>
          	<IonButton expand="block" onClick={ () => login() }>Login</IonButton>
         </IonList>
