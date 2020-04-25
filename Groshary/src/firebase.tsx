@@ -11,4 +11,4 @@ const config = {
     measurementId: "G-TJ6WB8T75F"
 };
 firebase.initializeApp(config);
-export const databaseRef = firebase.database().ref();
+export const db = firebase.firestore();
