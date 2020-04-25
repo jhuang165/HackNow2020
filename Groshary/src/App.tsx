@@ -43,7 +43,7 @@ const App: React.FC = () => {
 
 
   const [loggedIn, setLoggedIn] = useState(
-    false
+    true
   )
 
   auth.onAuthStateChanged(function(user) {

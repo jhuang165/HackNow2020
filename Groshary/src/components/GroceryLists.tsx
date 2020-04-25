@@ -2,16 +2,13 @@ import React from 'react';
 import './GroceryLists.css';
 import { IonList, IonItem } from '@ionic/react';
 import { db } from '../firebase';
+import { Link } from 'react-router-dom';
 
 interface Props {
 }
 interface State {
     loading: Boolean;
-    listNames: Array<String>;
-}
-interface FirebaseList {
-    items: Object;
-    name: String;
+    listNames: Map<String, String>;
 }
 
 class GroceryLists extends React.Component<Props, State> {
@@ -19,17 +16,17 @@ class GroceryLists extends React.Component<Props, State> {
         super(props);
         this.state = {
             loading: true,
-            listNames: []
+            listNames: new Map<String, String>()
         };
     }
     componentDidMount() {
         let listsRef = db.ref('/lists/');
         listsRef.on('value', lists => {
-            let listNames: Array<String> = [];
+            let listNames = new Map<String, String>();
             let data = lists.val();
             let keys = Object.keys(data);
             keys.forEach(key => {
-                listNames.push(data[key].name);
+                listNames.set(key, data[key].name);
             });
             this.setState({ listNames, loading: false });
         });
@@ -42,12 +39,14 @@ class GroceryLists extends React.Component<Props, State> {
                     Loading...
                 </IonItem>
                 :
-                this.state.listNames.map(listName => {
+                Array.from(this.state.listNames).map(([key, val]) => {
                     return (
+                    <Link to={{pathname: '/tab3', state: key}}>
                         <IonItem>
-                            {listName}
+                            {val}
                         </IonItem>
-                    );
+                    </Link>
+                    )
                 })
                 }
             </IonList>
