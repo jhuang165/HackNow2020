@@ -17,3 +17,4 @@ db.ref('users/blahblah/Breakfast List!').set({
 	eggs: 1,
 	beef: 1
 });
+export const auth = firebase.auth()
