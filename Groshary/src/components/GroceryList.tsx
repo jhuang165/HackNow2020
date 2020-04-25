@@ -25,7 +25,27 @@ class GroceryList extends React.Component<GroceryProps, State> {
     
     constructor(props: GroceryProps) {
         super(props)
+        this.newEntryStr = React.createRef() 
+        this.newEntryNum = React.createRef()
+        let listRef = this.setupListRef();
+        this.state = {
+            newValue: '',
+            items: new Map<String, Object>(),
+            name: 'Loading',
+            listRef: listRef
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props != prevProps && typeof this.props.listId == "string") {
+            let listRef = this.setupListRef();
+            this.setState({ listRef });
+        }
+    }
+
+    setupListRef() {
         let listId = this.props.listId;
+        console.log(listId);
         let listRef = db.ref('/lists/' + listId);
         listRef.on('value', (items: any) => {
             let itemData = items.val();
@@ -35,17 +55,8 @@ class GroceryList extends React.Component<GroceryProps, State> {
                 items: itemsList
             });
         });
-        this.newEntryStr = React.createRef() 
-        this.newEntryNum = React.createRef()
-        this.state = {
-            newValue: '',
-            items: new Map<String, Object>(),
-            name: 'Loading',
-            listRef: listRef
-        }          
-    }
-
-    
+        return listRef;
+    }    
 
     render() {
             return (
