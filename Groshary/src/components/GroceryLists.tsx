@@ -9,6 +9,10 @@ interface State {
     loading: Boolean;
     listNames: Array<String>;
 }
+interface FirebaseList {
+    items: Object;
+    name: String;
+}
 
 class GroceryLists extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -19,11 +23,14 @@ class GroceryLists extends React.Component<Props, State> {
         };
     }
     componentDidMount() {
-        let listNames: Array<String> = [];
-        var ref = db.ref('/users/blahblah/');
-        ref.on('value', snapshot => {
-            let keys = Object.keys(snapshot.val());
-            listNames = keys;
+        let listsRef = db.ref('/lists/');
+        listsRef.on('value', lists => {
+            let listNames: Array<String> = [];
+            let data = lists.val();
+            let keys = Object.keys(data);
+            keys.forEach(key => {
+                listNames.push(data[key].name);
+            });
             this.setState({ listNames, loading: false });
         });
     }
