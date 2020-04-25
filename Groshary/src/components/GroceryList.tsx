@@ -25,7 +25,14 @@ class GroceryList extends React.Component<GroceryProps, State> {
     
     constructor(props: GroceryProps) {
         super(props)
-        let listId = this.props.listId;
+        if(this.props.listId == 'new'){
+            var newref = db.ref('/lists/').push({
+                name: "newList"
+            })
+            var listId = newref.key ?? ''
+        } else {
+            var listId = this.props.listId.toString();
+        }     
         let listRef = db.ref('/lists/' + listId);
         listRef.on('value', (items: any) => {
             let itemData = items.val();
@@ -52,7 +59,7 @@ class GroceryList extends React.Component<GroceryProps, State> {
         <IonContent>
             <IonList>
                 <IonItem>
-                    <IonInput color="primary" value={this.state.name.toString()} onIonChange={(e) => {this.setState({name: (e.detail.value ?? '').toString()})}}></IonInput>
+                    <IonInput color="primary" value={this.state.name.toString()} onIonChange={(e) => {this.state.listRef.update({"name": (e.detail.value ?? '').toString()})}}/>
                 </IonItem>
                 
                 {Object.entries(this.state.items).map(([key, value], count) => {

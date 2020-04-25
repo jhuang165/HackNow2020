@@ -1,6 +1,7 @@
 import React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import './Tab1.css';
+import GroceryList from '../components/GroceryList'
 
 const Tab1: React.FC = () => {
   return (
@@ -17,6 +18,8 @@ const Tab1: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         
+      <GroceryList listId='new'/>
+
       </IonContent>
     </IonPage>
   );
