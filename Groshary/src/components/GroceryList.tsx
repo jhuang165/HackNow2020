@@ -14,7 +14,8 @@ interface GroceryProps {
 interface State {
     items: Map<String, Object>,
     newValue: String,
-    name: String
+    name: String,
+    listRef: firebase.database.Reference
 }
 
 class GroceryList extends React.Component<GroceryProps, State> {  
@@ -36,7 +37,8 @@ class GroceryList extends React.Component<GroceryProps, State> {
         this.state = {
             newValue: '',
             items: new Map<String, Object>(),
-            name: 'Loading'
+            name: 'Loading',
+            listRef: listRef
         }          
     }
 
@@ -75,19 +77,18 @@ class GroceryList extends React.Component<GroceryProps, State> {
                 })}
             </IonList>
 
-            {/* {this.props.editable &&
+            {this.props.editable &&
                 <IonItem>
                     <IonInput value={this.state.newValue.toString()} ref={this.newEntry} placeholder="Add Grocery Item" color='#ffffff' onKeyPress={(e) => {
                         if(e.key.toLowerCase() == 'enter' || e.key.toLowerCase() == 'return'){
-                            this.setState({
-                                // list: this.state.list.concat([(this.newEntry.current?.value ?? '').toString()])
+                            this.state.listRef.push({
+                                "items": (this.newEntry.current?.value ?? '').toString()
                             })
-                            //this.newEntry.current?.value = ''
                         }
                     }} />
                 </IonItem>
                 
-            } */}
+            } 
         </IonContent>
     );
     }
