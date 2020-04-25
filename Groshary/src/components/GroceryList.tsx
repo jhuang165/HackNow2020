@@ -1,17 +1,22 @@
 import React from 'react';
-import { IonList, IonItem, IonInput, IonContent} from '@ionic/react';
+import { IonList, IonItem, IonInput, IonContent, IonLabel, IonCheckbox} from '@ionic/react';
 
 interface GroceryProps {
     items: Array<String>;
-    editable: boolean;
+    editable?: boolean;
+    checkable?: boolean;
 }
 
-const GroceryList: React.FC<GroceryProps> = ({items, editable}) => (
+
+const GroceryList: React.FC<GroceryProps> = ({items, editable = false, checkable = false}) => (
     <IonContent>
         <IonList>
             {items.map(item => {
                 return (
-                    <IonItem>{item}</IonItem>
+                    <IonItem>
+                        {checkable && <IonCheckbox slot="start" />}
+                        <IonLabel>{item}</IonLabel>
+                    </IonItem>
                 );
             })}
         </IonList>
@@ -23,6 +28,6 @@ const GroceryList: React.FC<GroceryProps> = ({items, editable}) => (
             
         }
     </IonContent>
-)
+);
 
 export default GroceryList;
