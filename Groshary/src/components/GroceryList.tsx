@@ -81,9 +81,9 @@ class GroceryList extends React.Component<GroceryProps, State> {
                 <IonItem>
                     <IonInput value={this.state.newValue.toString()} ref={this.newEntry} placeholder="Add Grocery Item" color='#ffffff' onKeyPress={(e) => {
                         if(e.key.toLowerCase() == 'enter' || e.key.toLowerCase() == 'return'){
-                            this.state.listRef.push({
-                                "items": (this.newEntry.current?.value ?? '').toString()
-                            })
+                            this.state.listRef.child('items').push(
+                                {"name": (this.newEntry.current?.value ?? '').toString(), "count": 1}
+                            );
                         }
                     }} />
                 </IonItem>
