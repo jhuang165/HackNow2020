@@ -9,16 +9,7 @@ const Register: React.FC = () => {
 
   const [ formErrors, setFormErrors ] = useState({});
 
-  const submit = async () => {
-    try {
-      await login({
-        email,
-        password
-      });
-    } catch (e) {
-      setFormErrors(e);
-    }
-  }
+  
 	function register() {
 		auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
   			// Handle Errors here.
@@ -60,7 +51,7 @@ const Register: React.FC = () => {
         	
           	<IonItem>
             	<IonLabel position="floating">Email</IonLabel>
-            	<IonInput value={email} onIonChange={(e) => setEmail(e.target.value)} />         	
+            	<IonInput value={email} onIonChange={(e) => setEmail((e != null) ? e.target.value : '')} />         	
             </IonItem>
          	<IonItem>
             	<IonLabel position="floating">Password</IonLabel>
