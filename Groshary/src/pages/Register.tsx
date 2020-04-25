@@ -4,11 +4,8 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem
 import {auth} from '../firebase';
 
 const Register: React.FC = () => {
-	const [ email, setEmail ] = useState('');
-  const [ password, setPassword ] = useState('');
-
-  const [ formErrors, setFormErrors ] = useState({});
-
+	const [ email, setEmail ] = useState('email');
+  const [ password, setPassword ] = useState('password');
   
 	function register() {
 		auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
@@ -27,16 +24,18 @@ const Register: React.FC = () => {
       setEmail(txt ? txt : '')
     }
   }*/
-  const handlePassChange = (e: FormEvent<HTMLIonInputElement>) => {
+  const handlePassChange = (e: React.ChangeEvent<HTMLIonInputElement>) => {
     const txt = e.currentTarget.value;
     if (txt != undefined) {
-      setPassword(txt ? txt : '')
+      let txt2 = txt as string;
+      setPassword(txt2 ? txt2 : '')
     }
   }
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLIonInputElement>) => {
     const txt = e.currentTarget.value;
     if (txt != undefined) {
-      setEmail(txt ? txt : '')
+      let txt2 = txt as string;
+      setEmail(txt2 ? txt2 : '')
     }
   }
     return (
@@ -51,11 +50,11 @@ const Register: React.FC = () => {
         	
           	<IonItem>
             	<IonLabel position="floating">Email</IonLabel>
-            	<IonInput value={email} onIonChange={(e) => setEmail((e != null) ? e.target.value : '')} />         	
+            	<IonInput value={email} onInput={() => handleEmailChange} />         	
             </IonItem>
          	<IonItem>
             	<IonLabel position="floating">Password</IonLabel>
-            	<IonInput value={password} onInput={handlePassChange} />
+            	<IonInput value={password} onInput={() => handlePassChange} />
          	</IonItem>
          	<IonButton expand="block" onClick={ () => register() }>
            Register
