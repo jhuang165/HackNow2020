@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonList, IonItem, IonInput, IonContent, IonLabel, IonCheckbox, IonIcon, IonRippleEffect} from '@ionic/react';
+import { IonList, IonItem, IonInput, IonContent, IonLabel, IonCheckbox, IonIcon, IonNote} from '@ionic/react';
 import {closeOutline, timeSharp} from 'ionicons/icons'
 import { render } from '@testing-library/react';
 import { db } from '../firebase';
@@ -19,7 +19,9 @@ interface State {
 }
 
 class GroceryList extends React.Component<GroceryProps, State> {  
-    private newEntry: React.RefObject<HTMLIonInputElement>;
+    private newEntryStr: React.RefObject<HTMLIonInputElement>;
+    private newEntryNum: React.RefObject<HTMLIonInputElement>;
+
     
     constructor(props: GroceryProps) {
         super(props)
@@ -33,7 +35,8 @@ class GroceryList extends React.Component<GroceryProps, State> {
                 items: itemsList
             });
         });
-        this.newEntry = React.createRef() 
+        this.newEntryStr = React.createRef() 
+        this.newEntryNum = React.createRef()
         this.state = {
             newValue: '',
             items: new Map<String, Object>(),
@@ -56,8 +59,16 @@ class GroceryList extends React.Component<GroceryProps, State> {
                     var hash = Object.keys(this.state.items)[count]
                     return (
                         <IonItem>
-                            {!this.props.editable && <IonLabel>{value.name}</IonLabel>}
                             {this.props.checkable && <IonCheckbox slot="start" />}
+                            {!this.props.editable && <IonLabel>{value.count}</IonLabel>}
+                            {!this.props.editable && <IonLabel>{value.name}</IonLabel>}
+                            {this.props.editable && <IonInput type="number" value={value.count} onIonChange={(e) => {
+                                let newItems = JSON.parse(JSON.stringify(this.state.items))
+                                newItems[hash].count = (e.detail.value ?? '')
+                                this.setState({
+                                    items: newItems
+                                })
+                            }} />}                  
                             {this.props.editable && <IonInput value={value.name} onIonChange={(e) => {
                                 let newItems = JSON.parse(JSON.stringify(this.state.items))
                                 newItems[hash].name = (e.detail.value ?? '').toString()
@@ -65,6 +76,7 @@ class GroceryList extends React.Component<GroceryProps, State> {
                                     items: newItems
                                 })                  
                             }}/>}
+                            
                             {this.props.editable && <IonIcon icon={closeOutline} onClick={e => {
                                 let newItems = JSON.parse(JSON.stringify(this.state.items))
                                 delete newItems[hash]
@@ -72,6 +84,7 @@ class GroceryList extends React.Component<GroceryProps, State> {
                                     items: newItems
                                 })
                             }}/>}
+                            
                         </IonItem>
                     );
                 })}
@@ -79,10 +92,17 @@ class GroceryList extends React.Component<GroceryProps, State> {
 
             {this.props.editable &&
                 <IonItem>
-                    <IonInput value={this.state.newValue.toString()} ref={this.newEntry} placeholder="Add Grocery Item" color='#ffffff' onKeyPress={(e) => {
+                    <IonInput type="number" value={this.state.newValue.toString()} ref={this.newEntryNum} placeholder="How many items" color='#ffffff' onKeyPress={(e) => {
+                        if (e.key.toLowerCase() == 'enter' || e.key.toLowerCase() == 'return') {
+                            this.state.listRef.push({
+                                "items": (this.newEntryNum.current?.value ?? '').toString()
+                            })
+                        }
+                    }} />
+                    <IonInput value={this.state.newValue.toString()} ref={this.newEntryStr} placeholder="Add Grocery Item" color='#ffffff' onKeyPress={(e) => {
                         if(e.key.toLowerCase() == 'enter' || e.key.toLowerCase() == 'return'){
                             this.state.listRef.push({
-                                "items": (this.newEntry.current?.value ?? '').toString()
+                                "items": (this.newEntryStr.current?.value ?? '').toString()
                             })
                         }
                     }} />
