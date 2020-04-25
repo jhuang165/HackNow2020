@@ -28,14 +28,14 @@ const Register: React.FC = () => {
     const txt = e.currentTarget.value;
     if (txt != undefined) {
       let txt2 = txt as string;
-      setPassword(txt2 ? txt2 : '')
+      setPassword(txt2)
     }
   }
   const handleEmailChange = (e: React.ChangeEvent<HTMLIonInputElement>) => {
     const txt = e.currentTarget.value;
     if (txt != undefined) {
       let txt2 = txt as string;
-      setEmail(txt2 ? txt2 : '')
+      setEmail(txt2)
     }
   }
     return (
@@ -50,11 +50,11 @@ const Register: React.FC = () => {
         	
           	<IonItem>
             	<IonLabel position="floating">Email</IonLabel>
-            	<IonInput value={email} onInput={() => handleEmailChange} />         	
+            	<IonInput value={email} onInput={(e) => handleEmailChange(e as React.ChangeEvent<HTMLIonInputElement>)} />         	
             </IonItem>
          	<IonItem>
             	<IonLabel position="floating">Password</IonLabel>
-            	<IonInput value={password} onInput={() => handlePassChange} />
+            	<IonInput value={password} onInput={(e) => handlePassChange(e as React.ChangeEvent<HTMLIonInputElement>)} />
          	</IonItem>
          	<IonButton expand="block" onClick={ () => register() }>
            Register
