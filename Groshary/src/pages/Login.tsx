@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import './Login.css'
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider, IonButton, IonIcon } from '@ionic/react';
 
 const Login: React.FC = () => {
 	const [text, setText] = useState<string>();
   	const [number, setNumber] = useState<number>();
     return (
-        // put stuff here
         <IonPage>
       <IonHeader>
         <IonToolbar>
@@ -24,10 +23,12 @@ const Login: React.FC = () => {
             	<IonLabel position="floating">Password</IonLabel>
             	<IonInput value={text}></IonInput>
          	</IonItem>
+         	<IonButton expand="block">Login</IonButton>
         </IonList>
       </IonContent>
     </IonPage>
     );
+
 };
 
 export default Login;
