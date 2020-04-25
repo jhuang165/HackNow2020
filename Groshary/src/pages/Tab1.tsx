@@ -18,7 +18,7 @@ const Tab1: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         
-      <GroceryList listId='new'/>
+      <GroceryList listId='new' editable={true}/>
 
       </IonContent>
     </IonPage>
