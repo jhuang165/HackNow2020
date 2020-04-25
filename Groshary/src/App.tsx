@@ -35,8 +35,6 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-console.log(getPlatforms())
-
 const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
@@ -47,7 +45,7 @@ const App: React.FC = () => (
           <Route path="/tab3" component={Tab3} />
           <Route path="/" render={() => <Redirect to="/tab1" />} exact={true} />
         </IonRouterOutlet>
-        <IonTabBar slot={getPlatforms().includes('desktop') ? 'top' : 'bottom'}>
+        <IonTabBar slot={(getPlatforms().includes('desktop') || getPlatforms().includes('pwa')) ? 'top' : 'bottom'}>
           <IonTabButton tab="tab1" href="/tab1">
             <IonIcon icon={triangle} />
             <IonLabel>Tab 1</IonLabel>
