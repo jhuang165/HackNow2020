@@ -55,7 +55,7 @@ class GroceryList extends React.Component<GroceryProps, State> {
         let listRef = db.ref('/lists/' + listId);
         listRef.on('value', (items: any) => {
             let itemData = items.val();
-            let itemsList = itemData.items;
+            let itemsList = itemData.items ?? new Map<String, Object>();
             this.setState({
                 name: itemData.name,
                 items: itemsList
