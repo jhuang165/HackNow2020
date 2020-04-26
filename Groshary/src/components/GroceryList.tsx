@@ -38,7 +38,7 @@ class GroceryList extends React.Component<GroceryProps, State> {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.props != prevProps && typeof this.props.listId == "string") {
+        if (this.props.listId != prevProps.listId && typeof this.props.listId == "string") {
             console.log(this.props.listId);
             let listRef = this.setupListRef();
             this.setState({ listRef });
@@ -46,7 +46,7 @@ class GroceryList extends React.Component<GroceryProps, State> {
     }
 
     setupListRef() {
-        if (this.props.listId == 'new' || this.props.listId == null || this.props.listId == undefined) {
+        if (typeof this.props.listId == "string" && this.props.listId.startsWith('new') || this.props.listId == null || this.props.listId == undefined) {
             var newref = db.ref('/lists/').push({
                 name: "New List"
             })

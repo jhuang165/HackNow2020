@@ -58,7 +58,6 @@ class GroceryLists extends React.Component<Props, State> {
                 </IonItem>
                 :
                 Array.from(this.state.listNames).map(([key, val]) => {
-                    console.log(val);
                     return (
                     <Link to={{pathname: '/tab3', state: key}}>
                         <IonItem>
