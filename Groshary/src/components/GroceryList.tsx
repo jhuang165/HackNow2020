@@ -85,7 +85,10 @@ class GroceryList extends React.Component<GroceryProps, State> {
                     var hash = Object.keys(this.state.items)[count]
                     return (
                         <IonItem>
-                            {this.props.checkable && <IonCheckbox slot="start" />}
+                            {this.props.checkable && <IonCheckbox checked={value.bought} slot="start" onIonChange={(e) => {
+                                // (un)check
+                                this.state.listRef.child('items').child(hash).update({ "bought": (e.detail.checked) }); 
+                            }}/>}
                             {!this.props.editable && <IonLabel>{value.count}</IonLabel>}
                             {!this.props.editable && <IonLabel>{value.name}</IonLabel>}
                             {this.props.editable && <IonInput type="number" value={value.count} onIonChange={(e) => {
@@ -110,6 +113,7 @@ class GroceryList extends React.Component<GroceryProps, State> {
             {this.props.editable &&
                 <IonItem>
                     <IonInput type="number" value={this.state.newValue.toString()} ref={this.newEntryNum} placeholder="How many items" color='#ffffff' onKeyPress={(e) => {
+                            // hit enter from count box
                             if (this.newEntryNum.current?.value?.toString() == null || this.newEntryNum.current?.value?.toString() == '') {
                                 var count = 1
                             } else {
@@ -117,11 +121,12 @@ class GroceryList extends React.Component<GroceryProps, State> {
                             }
                             if (e.key.toLowerCase() == 'enter' || e.key.toLowerCase() == 'return') {
                                 this.state.listRef.child('items').push(
-                                    { "count": count, "name": (this.newEntryStr.current?.value ?? '').toString() }
+                                    { "count": count, "name": (this.newEntryStr.current?.value ?? '').toString(), "bought": false }
                                 );
                             }
                     }} />
                     <IonInput value={this.state.newValue.toString()} ref={this.newEntryStr} placeholder="Add Grocery Item" color='#ffffff' onKeyPress={(e) => {
+                        // hit enter from name box
                         if (this.newEntryNum.current?.value?.toString() == null || this.newEntryNum.current?.value?.toString() == ''){
                             var count = 1
                         } else {
@@ -129,7 +134,7 @@ class GroceryList extends React.Component<GroceryProps, State> {
                         }
                         if(e.key.toLowerCase() == 'enter' || e.key.toLowerCase() == 'return'){
                             this.state.listRef.child('items').push(
-                                { "count": count, "name": (this.newEntryStr.current?.value ?? '').toString() }
+                                { "count": count, "name": (this.newEntryStr.current?.value ?? '').toString(), "bought": false }
                             );
                         }
                     }} />
