@@ -15,7 +15,7 @@ const Login: React.FC = () => {
             error = true;
             var errorCode = error.code;
             var errorMessage = error.message;
-            alert(errorMessage);
+            alert("Incorrect username or password");
         });
         if (!error) {
             history.replace('/tab2');
@@ -76,7 +76,7 @@ const Login: React.FC = () => {
             </IonItem>
          	<IonItem>
             	<IonLabel position="floating">Password</IonLabel>
-            	<IonInput value={password} onInput={(e) => handlePassChange(e as React.ChangeEvent<HTMLIonInputElement>)} />
+            	<IonInput value={password} type="password" onInput={(e) => handlePassChange(e as React.ChangeEvent<HTMLIonInputElement>)} />
          	</IonItem>
          	<IonButton expand="block" onClick={ () => login() }>Login</IonButton>
          	<IonButton expand="block" color="success" onClick={() => googleLogin() }>Google Sign In</IonButton>

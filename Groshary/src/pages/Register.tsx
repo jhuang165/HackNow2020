@@ -61,7 +61,7 @@ const Register: React.FC = () => {
             </IonItem>
          	<IonItem>
             	<IonLabel position="floating">Password</IonLabel>
-            	<IonInput value={password} onInput={(e) => handlePassChange(e as React.ChangeEvent<HTMLIonInputElement>)} />
+                <IonInput value={password} type="password" onInput={(e) => handlePassChange(e as React.ChangeEvent<HTMLIonInputElement>)} />
          	</IonItem>
          	<IonButton expand="block" onClick={ () => register() }>
            Register

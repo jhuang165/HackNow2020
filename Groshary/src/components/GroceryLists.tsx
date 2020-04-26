@@ -1,17 +1,17 @@
 import React from 'react';
 import './GroceryLists.css';
-import { IonList, IonItem, IonLabel, IonInput } from '@ionic/react';
-import { db } from '../firebase';
+import { IonList, IonItem, IonLabel, IonInput, IonIcon } from '@ionic/react';
+import { db, auth } from '../firebase';
 import { Link } from 'react-router-dom';
 import { getGeohash } from '../geohash';
 import { inMiles } from 'geohash-distance';
-import { key } from 'ionicons/icons';
+import { closeOutline } from 'ionicons/icons';
 
 interface Props {
 }
 interface State {
     loading: Boolean;
-    listNames: Map<String, Object>;
+    listNames: Map<string, Object>;
 }
 
 class GroceryLists extends React.Component<Props, State> {
@@ -19,7 +19,7 @@ class GroceryLists extends React.Component<Props, State> {
         super(props);
         this.state = {
             loading: true,
-            listNames: new Map<String, Object>()
+            listNames: new Map<string, Object>()
         };
     }
 
@@ -28,7 +28,7 @@ class GroceryLists extends React.Component<Props, State> {
         getGeohash().then(geohash => {
             console.log("GEOHASH: " + geohash);
             listsRef.on('value', lists => {
-                let listNames = new Map<String, Object>();
+                let listNames = new Map<string, Object>();
                 let data = lists.val();
                 let keys = Object.keys(data ?? []);
                 keys.sort((a: string, b: string) => {
@@ -38,13 +38,14 @@ class GroceryLists extends React.Component<Props, State> {
                 });
                 keys.forEach(key => {
                     let dist = data[key].geohash !== undefined ? parseInt(inMiles(data[key].geohash, geohash)) : undefined;
-                    listNames.set(key, { name: data[key].name, distance: dist });
+                    listNames.set(key, { name: data[key].name, distance: dist, createdBy: data[key].createdBy });
                 });
                 this.setState({ listNames, loading: false });
             })
         });
     }
     render() {
+        let uid = auth.currentUser?.uid;
         return (
             <IonList>
                 { this.state.loading ?
@@ -58,11 +59,17 @@ class GroceryLists extends React.Component<Props, State> {
                 </IonItem>
                 :
                 Array.from(this.state.listNames).map(([key, val]) => {
+                    console.log(val);
                     return (
                     <Link to={{pathname: '/tab3', state: key}}>
                         <IonItem>
                             <IonLabel color="primary">{val['name']}</IonLabel>
                             <IonLabel class="distance">{val['distance'] !== undefined ? val['distance'] + " miles away" : "unknown location"}</IonLabel>
+                            {val['createdBy'] === uid && <IonIcon color="danger" icon={closeOutline} onClick={e => {
+                                // delete item
+                                e.preventDefault();
+                                db.ref('/lists/').child(key).remove();
+                            }} />}
                         </IonItem>
                     </Link>
                     )
