@@ -5,6 +5,7 @@ import {auth, provider} from '../firebase';
 import { History, LocationState } from "history";
 import { withRouter } from "react-router";
 import { Redirect } from "react-router-dom"; 
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 const Login: React.FC = () => {
 	const [ email, setEmail ] = useState('');
@@ -87,7 +88,7 @@ const Login: React.FC = () => {
          	<IonButton expand="block" onClick={ () => login() }>Login</IonButton>
          	<IonButton expand="block" color="success" onClick={() => googleLogin() }>Google Sign In</IonButton>
          	<IonButton id="change_screen_button" color="warning" fill="outline" href="/register">Register</IonButton>
-         	<IonButton expand></IonButton>
+         	<Link to="/tab2">dont press me</Link>
         </IonList>
       </IonContent>
     </IonPage>
