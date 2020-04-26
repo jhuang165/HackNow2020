@@ -20,7 +20,7 @@ const Login: React.FC = () => {
   			alert(errorMessage);
 		});
 		if (!error) {
-      		prop.history.push('/tab2');
+      		// prop.history.push('/tab2');
     	}
 	}
 

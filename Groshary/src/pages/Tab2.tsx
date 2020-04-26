@@ -8,13 +8,13 @@ const Tab2: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>My Lists</IonTitle>
+          <IonTitle>Lists Near Me</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">My Lists</IonTitle>
+            <IonTitle size="large">Lists Near Me</IonTitle>
           </IonToolbar>
         </IonHeader>
         <GroceryLists />

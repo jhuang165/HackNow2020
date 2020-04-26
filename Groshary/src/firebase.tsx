@@ -12,10 +12,5 @@ const config = {
 };
 firebase.initializeApp(config);
 export const db = firebase.database();
-db.ref('users/blahblah/Breakfast List!').set({
-	bread: 1,
-	eggs: 1,
-	beef: 1
-});
 export const auth = firebase.auth()
 export const provider = new firebase.auth.GoogleAuthProvider();

@@ -3,8 +3,7 @@ import { IonList, IonItem, IonInput, IonContent, IonLabel, IonCheckbox, IonIcon,
 import {closeOutline, timeSharp} from 'ionicons/icons'
 import { render } from '@testing-library/react';
 import { db } from '../firebase';
-import geohash from "ngeohash";
-
+import { getGeohash } from '../geohash';
 
 interface GroceryProps {
     listId: String;
@@ -36,19 +35,11 @@ class GroceryList extends React.Component<GroceryProps, State> {
             name: 'Loading',
             listRef: listRef
         }
-
-        this.manageCoords()
-    }
-
-    manageCoords() {
-        navigator.geolocation.getCurrentPosition(pos => {
-            const hash = geohash.encode(pos.coords.latitude, pos.coords.longitude);
-            console.log(hash)
-        })
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props != prevProps && typeof this.props.listId == "string") {
+            console.log(this.props.listId);
             let listRef = this.setupListRef();
             this.setState({ listRef });
         }
@@ -57,21 +48,28 @@ class GroceryList extends React.Component<GroceryProps, State> {
     setupListRef() {
         if (this.props.listId == 'new' || this.props.listId == null || this.props.listId == undefined) {
             var newref = db.ref('/lists/').push({
-                name: "newList"
+                name: "New List"
             })
             var listId = newref.key ?? ''
         } else {
             var listId = this.props.listId.toString();
         }
         let listRef = db.ref('/lists/' + listId);
+        if (this.props.listId == 'new') {
+            getGeohash().then(hash => {
+                console.log("GOT! " + hash);
+                this.state.listRef.update({ 'geohash': hash });
+            })
+        }
         listRef.on('value', (items: any) => {
-            let itemData = items.val();
+            let itemData = items.val() ?? {items: new Map<String, Object>()};
             let itemsList = itemData.items ?? new Map<String, Object>();
             this.setState({
                 name: itemData.name,
                 items: itemsList
             });
         });
+        
         return listRef;
     }    
 
