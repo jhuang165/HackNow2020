@@ -10,7 +10,22 @@ const config = {
     appId: "1:160552962098:web:7801c2ca868dc8c9aa142b",
     measurementId: "G-TJ6WB8T75F"
 };
+
 firebase.initializeApp(config);
 export const db = firebase.database();
 export const auth = firebase.auth()
+
+var loggedIn = false;
+auth.onAuthStateChanged(user => {
+    if (user) {
+        loggedIn = true;
+    } else {
+        loggedIn = false;
+    }
+});
+export const isLoggedIn = () => {
+    return loggedIn;
+};
+
+
 export const provider = new firebase.auth.GoogleAuthProvider();

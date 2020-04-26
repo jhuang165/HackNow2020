@@ -2,7 +2,7 @@ import React from 'react';
 import { IonList, IonItem, IonInput, IonContent, IonLabel, IonCheckbox, IonIcon, IonNote} from '@ionic/react';
 import {closeOutline, timeSharp} from 'ionicons/icons'
 import { render } from '@testing-library/react';
-import { db } from '../firebase';
+import { db, auth } from '../firebase';
 import { getGeohash } from '../geohash';
 
 interface GroceryProps {
@@ -16,7 +16,8 @@ interface State {
     items: Map<String, Object>,
     newValue: String,
     name: String,
-    listRef: firebase.database.Reference
+    listRef: firebase.database.Reference,
+    userUID?: String
 }
 
 class GroceryList extends React.Component<GroceryProps, State> {  
@@ -28,12 +29,21 @@ class GroceryList extends React.Component<GroceryProps, State> {
         super(props)
         this.newEntryStr = React.createRef() 
         this.newEntryNum = React.createRef()
+        if (this.props.listId['direction'] !== undefined) {
+            // they typed it in somehow
+            this.context.history.replace('/tab2');
+        }
         let listRef = this.setupListRef();
+        let uid = auth.currentUser?.uid
         this.state = {
             newValue: '',
             items: new Map<String, Object>(),
             name: 'Loading',
-            listRef: listRef
+            listRef: listRef,
+            userUID: uid
+        }
+        if (this.props.listId == "new") {
+            this.state.listRef.update({ 'createdBy': this.state.userUID });
         }
     }
 
@@ -46,7 +56,8 @@ class GroceryList extends React.Component<GroceryProps, State> {
     }
 
     setupListRef() {
-        if (typeof this.props.listId == "string" && this.props.listId.startsWith('new') || this.props.listId == null || this.props.listId == undefined) {
+        console.log(this.props.listId);
+        if (this.props.listId == "new" || this.props.listId == null || this.props.listId == undefined) {
             var newref = db.ref('/lists/').push({
                 name: "New List"
             })
