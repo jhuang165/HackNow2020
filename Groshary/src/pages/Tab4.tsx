@@ -1,9 +1,12 @@
 import React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import './Tab4.css';
-import GroceryList from '../components/GroceryList'
+import GroceryList from '../components/GroceryList';
+import {auth} from '../firebase';
 
 const Tab4: React.FC = () => {
+
+
   return (
     <IonPage>
       <IonHeader>

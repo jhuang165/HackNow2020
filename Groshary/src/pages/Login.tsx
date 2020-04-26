@@ -48,6 +48,7 @@ const Login: React.FC = () => {
   }
   // The signed-in user info.
   // ...
+  prop.history.push('/tab2');
 }).catch(function(error) {
   // Handle Errors here.
   var errorCode = error.code;
@@ -58,6 +59,7 @@ const Login: React.FC = () => {
   var credential = error.credential;
   // ...
 });
+
   }
 
     return (
