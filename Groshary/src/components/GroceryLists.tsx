@@ -62,8 +62,8 @@ class GroceryLists extends React.Component<Props, State> {
                     return (
                     <Link to={{pathname: '/tab3', state: key}}>
                         <IonItem>
-                            <IonLabel>{val['name']}</IonLabel>
-                            <IonLabel>{val['distance'] !== undefined ? val['distance'] + " miles away" : "unknown location"}</IonLabel>
+                            <IonLabel color="primary">{val['name']}</IonLabel>
+                            <IonLabel class="distance">{val['distance'] !== undefined ? val['distance'] + " miles away" : "unknown location"}</IonLabel>
                         </IonItem>
                     </Link>
                     )
