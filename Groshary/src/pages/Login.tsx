@@ -2,68 +2,66 @@ import React, { useState } from 'react';
 import './Login.css'
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem, IonLabel, IonList, IonItemDivider, IonButton, IonIcon } from '@ionic/react';
 import {auth, provider} from '../firebase';
-import { History, LocationState } from "history";
-import { withRouter } from "react-router";
-import { Redirect } from "react-router-dom"; 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { useHistory } from "react-router-dom"; 
 
 const Login: React.FC = () => {
-	const [ email, setEmail ] = useState('');
-  	const [ password, setPassword ] = useState('');
-
-	function login() {
-		var error = false;
-		auth.signInWithEmailAndPassword(email, password).catch(function(error) {
-			error = true;
-  			var errorCode = error.code;
-  			var errorMessage = error.message;
-  			alert(errorMessage);
-		});
-		if (!error) {
-      		// prop.history.push('/tab2');
-    	}
-	}
-
-	const handlePassChange = (e: React.ChangeEvent<HTMLIonInputElement>) => {
-    const txt = e.currentTarget.value;
-    if (txt != undefined) {
-      let txt2 = txt as string;
-      setPassword(txt2);
+    const [ email, setEmail ] = useState('');
+    const [ password, setPassword ] = useState('');
+    const history = useHistory();
+    
+    function login() {
+        var error = false;
+        auth.signInWithEmailAndPassword(email, password).catch(function(error) {
+            error = true;
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            alert(errorMessage);
+        });
+        if (!error) {
+            history.replace('/tab2');
+        }
     }
-  }
-  const handleEmailChange = (e: React.ChangeEvent<HTMLIonInputElement>) => {
-    const txt = e.currentTarget.value;
-    if (txt != undefined) {
-      let txt2 = txt as string;
-      setEmail(txt2);
+    
+    const handlePassChange = (e: React.ChangeEvent<HTMLIonInputElement>) => {
+        const txt = e.currentTarget.value;
+        if (txt != undefined) {
+            let txt2 = txt as string;
+            setPassword(txt2);
+        }
     }
-  }
-  function googleLogin() {
-  	auth.signInWithPopup(provider).then(function(result) {
-  // This gives you a Google Access Token. You can use it to access the Google API.
-  if (result != null) {
-  		var cred = result.credential;
-  		var user = result.user;
-
-  }
-  // The signed-in user info.
-  // ...
-  prop.history.push('/tab2');
-}).catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  // The email of the user's account used.
-  var email = error.email;
-  // The firebase.auth.AuthCredential type that was used.
-  var credential = error.credential;
-  // ...
-});
-
-  }
-
+    const handleEmailChange = (e: React.ChangeEvent<HTMLIonInputElement>) => {
+        const txt = e.currentTarget.value;
+        if (txt != undefined) {
+            let txt2 = txt as string;
+            setEmail(txt2);
+        }
+    }
+    function googleLogin() {
+        auth.signInWithPopup(provider).then(function(result) {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            if (result != null) {
+                var cred = result.credential;
+                var user = result.user;
+                
+            }
+            // The signed-in user info.
+            // ...
+            history.replace('/tab2');
+        }).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            // ...
+        });
+        
+    }
+    
     return (
-        <IonPage>
+    <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Login</IonTitle>
@@ -88,7 +86,7 @@ const Login: React.FC = () => {
       </IonContent>
     </IonPage>
     );
-
+    
 };
 
 export default Login;
