@@ -81,6 +81,7 @@ const Login: React.FC = () => {
          	<IonButton expand="block" onClick={ () => login() }>Login</IonButton>
          	<IonButton expand="block" color="success" onClick={() => googleLogin() }>Google Sign In</IonButton>
          	<IonButton id="change_screen_button" color="warning" fill="outline" href="/register">Register</IonButton>
+
         </IonList>
       </IonContent>
     </IonPage>
