@@ -1,6 +1,6 @@
 import React from 'react';
 import './GroceryLists.css';
-import { IonList, IonItem, IonLabel, IonInput, IonIcon } from '@ionic/react';
+import { IonList, IonItem, IonLabel, IonInput, IonIcon, IonButton, IonItemGroup } from '@ionic/react';
 import { db, auth } from '../firebase';
 import { Link } from 'react-router-dom';
 import { getGeohash } from '../geohash';
@@ -61,17 +61,20 @@ class GroceryLists extends React.Component<Props, State> {
                 Array.from(this.state.listNames).map(([key, val]) => {
                     console.log(val);
                     return (
-                    <Link to={{pathname: '/tab3', state: key}}>
-                        <IonItem>
+                    <IonItem>
+                        <Link to={{ pathname: '/tab3', state: key }}>
                             <IonLabel color="primary">{val['name']}</IonLabel>
+                        </Link>
                             <IonLabel class="distance">{val['distance'] !== undefined ? val['distance'] + " miles away" : "unknown location"}</IonLabel>
-                            {val['createdBy'] === uid && <IonIcon color="danger" icon={closeOutline} onClick={e => {
-                                // delete item
-                                e.preventDefault();
-                                db.ref('/lists/').child(key).remove();
-                            }} />}
-                        </IonItem>
-                    </Link>
+                        {val['createdBy'] === uid && <IonButton expand="block" color="danger" onClick={e => {
+                            // delete item
+                            e.stopPropagation();
+                            e.preventDefault();
+                            db.ref('/lists/').child(key).remove();
+                        }}>
+                        <IonIcon icon={closeOutline} />
+                        </IonButton>}
+                    </IonItem>
                     )
                 }))
                 }
