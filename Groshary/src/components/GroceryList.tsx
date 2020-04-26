@@ -3,6 +3,8 @@ import { IonList, IonItem, IonInput, IonContent, IonLabel, IonCheckbox, IonIcon,
 import {closeOutline, timeSharp} from 'ionicons/icons'
 import { render } from '@testing-library/react';
 import { db } from '../firebase';
+import geohash from "ngeohash";
+
 
 interface GroceryProps {
     listId: String;
@@ -34,6 +36,15 @@ class GroceryList extends React.Component<GroceryProps, State> {
             name: 'Loading',
             listRef: listRef
         }
+
+        this.manageCoords()
+    }
+
+    manageCoords() {
+        navigator.geolocation.getCurrentPosition(pos => {
+            const hash = geohash.encode(pos.coords.latitude, pos.coords.longitude);
+            console.log(hash)
+        })
     }
 
     componentDidUpdate(prevProps, prevState) {
