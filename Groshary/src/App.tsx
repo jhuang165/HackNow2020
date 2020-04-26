@@ -17,6 +17,7 @@ import Register from './pages/Register';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
+import Tab4 from './pages/Tab4';
 import {getPlatforms} from '@ionic/react';
 import { auth } from './firebase';
 
@@ -71,13 +72,14 @@ const App: React.FC = () => {
         <IonReactRouter>
           <IonTabs>
             <IonRouterOutlet>
-              <Route path="/" render={() => <Redirect to="/login" />} exact={true} />
+              <Route path="/" render={() => <Redirect to="/tab2" />} exact={true} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
               {/* Change this to only redirect to login if not authenticated */}
               <Route path="/tab1" component={Tab1} exact={true} />
               <Route path="/tab2" component={Tab2} exact={true} />
               <Route path="/tab3" component={Tab3} />
+               <Route path="/tab4" component={Tab4} />
             </IonRouterOutlet>
             <IonTabBar slot={(getPlatforms().includes('desktop') || getPlatforms().includes('pwa')) ? 'top' : 'bottom'}>
               <IonTabButton tab="tab1" href="/tab1">
@@ -91,6 +93,10 @@ const App: React.FC = () => {
             <IonTabButton tab="tab3" href="/tab3">
                 <IonIcon icon={square} />
                 <IonLabel>A List</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="tab4" href="/tab4">
+                <IonIcon icon={square} />
+                <IonLabel>Profile</IonLabel>
               </IonTabButton>
             </IonTabBar>
           </IonTabs>

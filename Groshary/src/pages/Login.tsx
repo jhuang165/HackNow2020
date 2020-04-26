@@ -4,10 +4,18 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonInput, IonItem
 import {auth, provider} from '../firebase';
 import { History, LocationState } from "history";
 import { withRouter } from "react-router";
+import { Redirect } from "react-router-dom"; 
 
 const Login: React.FC = () => {
 	const [ email, setEmail ] = useState('');
   	const [ password, setPassword ] = useState('');
+
+  	var state = {
+    toDashboard: false,
+  }
+  const handleSubmit = () => {
+      state.toDashboard = true;
+  }
 
 	function login() {
 		var error = false;
@@ -18,7 +26,7 @@ const Login: React.FC = () => {
   			alert(errorMessage);
 		});
 		if (!error) {
-      		window.history.pushState(null, "Main", "/tab2");
+      		handleSubmit();
     	}
 	}
 
@@ -42,10 +50,9 @@ const Login: React.FC = () => {
   if (result != null) {
   		var cred = result.credential;
   		var user = result.user;
-  		
+
   }
   // The signed-in user info.
-  window.history.pushState(null, "Main", "/tab2");
   // ...
 }).catch(function(error) {
   // Handle Errors here.
@@ -58,6 +65,7 @@ const Login: React.FC = () => {
   // ...
 });
   }
+
     return (
         <IonPage>
       <IonHeader>
@@ -79,6 +87,7 @@ const Login: React.FC = () => {
          	<IonButton expand="block" onClick={ () => login() }>Login</IonButton>
          	<IonButton expand="block" color="success" onClick={() => googleLogin() }>Google Sign In</IonButton>
          	<IonButton id="change_screen_button" color="warning" fill="outline" href="/register">Register</IonButton>
+         	<IonButton expand></IonButton>
         </IonList>
       </IonContent>
     </IonPage>
