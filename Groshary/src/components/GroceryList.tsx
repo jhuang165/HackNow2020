@@ -3,7 +3,6 @@ import { IonList, IonItem, IonInput, IonContent, IonLabel, IonCheckbox, IonIcon,
 import {closeOutline, timeSharp} from 'ionicons/icons'
 import { render } from '@testing-library/react';
 import { db } from '../firebase';
-import { GeolocatedProps, geolocated } from "react-geolocated";
 
 interface GroceryProps {
     listId: String;
@@ -19,7 +18,7 @@ interface State {
     listRef: firebase.database.Reference
 }
 
-class GroceryList extends React.Component<GroceryProps & GeolocatedProps, State> {  
+class GroceryList extends React.Component<GroceryProps, State> {  
     private newEntryStr: React.RefObject<HTMLIonInputElement>;
     private newEntryNum: React.RefObject<HTMLIonInputElement>;
 
@@ -66,7 +65,6 @@ class GroceryList extends React.Component<GroceryProps & GeolocatedProps, State>
     }    
 
     render() {
-        console.log(this.props.coords)
             return (
         <IonContent>
             <IonList>
