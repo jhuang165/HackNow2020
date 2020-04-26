@@ -11,13 +11,6 @@ const Login: React.FC = () => {
 	const [ email, setEmail ] = useState('');
   	const [ password, setPassword ] = useState('');
 
-  	var state = {
-    toDashboard: false,
-  }
-  const handleSubmit = () => {
-      state.toDashboard = true;
-  }
-
 	function login() {
 		var error = false;
 		auth.signInWithEmailAndPassword(email, password).catch(function(error) {
@@ -27,7 +20,7 @@ const Login: React.FC = () => {
   			alert(errorMessage);
 		});
 		if (!error) {
-      		handleSubmit();
+      		prop.history.push('/tab2');
     	}
 	}
 
@@ -35,14 +28,14 @@ const Login: React.FC = () => {
     const txt = e.currentTarget.value;
     if (txt != undefined) {
       let txt2 = txt as string;
-      setPassword(txt2)
+      setPassword(txt2);
     }
   }
   const handleEmailChange = (e: React.ChangeEvent<HTMLIonInputElement>) => {
     const txt = e.currentTarget.value;
     if (txt != undefined) {
       let txt2 = txt as string;
-      setEmail(txt2)
+      setEmail(txt2);
     }
   }
   function googleLogin() {
@@ -88,7 +81,6 @@ const Login: React.FC = () => {
          	<IonButton expand="block" onClick={ () => login() }>Login</IonButton>
          	<IonButton expand="block" color="success" onClick={() => googleLogin() }>Google Sign In</IonButton>
          	<IonButton id="change_screen_button" color="warning" fill="outline" href="/register">Register</IonButton>
-         	<Link to="/tab2">dont press me</Link>
         </IonList>
       </IonContent>
     </IonPage>
