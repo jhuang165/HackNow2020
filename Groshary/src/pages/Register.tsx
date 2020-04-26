@@ -20,8 +20,8 @@ const Register: React.FC = () => {
 
 		});
     if (!error) {
-      window.history.pushState(null, "Main", "/tab2");
-    }
+          prop.history.push('/tab2');
+      }
 	}
   /*
   const handleChange = (e: Event) => {
